@@ -2,10 +2,13 @@
 #include <stdio.h>
 #include <string.h>
 #include "../include/config.h"
+#include "../include/client.h"
 #define PATH "C:/GEA/data/config.txt"
 
 void alterarConfig()
 {
+    clear();
+    logo();
     int novoEstoqueMinimo;
 
     printf("Digite o novo estoque minimo do sistema: ");
@@ -24,6 +27,7 @@ void alterarConfig()
     fclose(file);
 
     printf("Estoque minimo do sistema atualizado com sucesso.\n");
+    wait_action();
 }
 
 int obterEstoqueMinimo()

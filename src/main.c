@@ -32,6 +32,10 @@ int main()
                 scanf("%d", &opcaoUsr);
                 menuUsers(opcaoUsr, usuarios, &contador);
             }
+            else if (opcao == 7)
+            {
+                alterarConfig();
+            }
             else
             {
                 menuPecas(opcao, pecas, &contador);

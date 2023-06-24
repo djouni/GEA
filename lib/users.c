@@ -184,7 +184,7 @@ void atualizarUsuario(struct Usuario *usuarios, int contador)
             printf("Erro ao abrir o arquivo.\n");
             return;
         }
-
+        fflush(stdin);
         for (int i = 0; i < contador; i++)
         {
             fprintf(file, "%d %s %s %d\n", usuarios[i].id, usuarios[i].nome, usuarios[i].senha, usuarios[i].cargo);
@@ -237,7 +237,7 @@ void excluirUsuario(struct Usuario *usuarios, int *contador)
             printf("Erro ao abrir o arquivo.\n");
             return;
         }
-
+        fflush(stdin);
         for (int i = 0; i < *contador; i++)
         {
             fprintf(file, "%d %s %s %d\n", usuarios[i].id, usuarios[i].nome, usuarios[i].senha, usuarios[i].cargo);
@@ -274,6 +274,7 @@ void menuUsers(int opcao, struct Usuario usuarios[], int *contador)
         break;
     default:
         printf("Opcao invalida. Por favor, escolha uma opcao valida.\n");
+        wait_action();
         break;
     }
 }
