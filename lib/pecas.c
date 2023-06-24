@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "../include/pecas.h"
 #include "../include/config.h"
 #include "../include/client.h"
@@ -179,7 +180,10 @@ void atualizarPeca(struct Peca *pecas, int contador)
 
         for (int i = 0; i < contador; i++)
         {
-            fprintf(file, "%d %s %s %s %d\n", pecas[i].id, pecas[i].nome, pecas[i].marca, pecas[i].montadora, pecas[i].quantidade);
+            if (pecas[i].id != 0)
+            {
+                fprintf(file, "%d %s %s %s %d\n", pecas[i].id, pecas[i].nome, pecas[i].marca, pecas[i].montadora, pecas[i].quantidade);
+            }
         }
 
         fclose(file);
@@ -227,19 +231,30 @@ void excluirPeca(struct Peca *pecas, int *contador)
             return;
         }
 
-        // Fechar o arquivo antes de reabri-lo no modo "w"
-        fclose(file);
-
-        file = fopen(PATH, "w+");
-        if (file == NULL)
-        {
-            printf("Erro ao abrir o arquivo.\n");
-            return;
-        }
-
+        // Encontrar a posição inicial dos dados a serem substituídos
+        long posicaoInicial = 0;
         for (int i = 0; i < *contador; i++)
         {
-            fprintf(file, "%d %s %s %s %d\n", pecas[i].id, pecas[i].nome, pecas[i].marca, pecas[i].montadora, pecas[i].quantidade);
+            if (pecas[i].id == id)
+            {
+                posicaoInicial = ftell(file);
+                break;
+            }
+        }
+
+        // Posicionar o ponteiro de escrita no início dos dados a serem substituídos
+        fseek(file, posicaoInicial, SEEK_SET);
+
+        // Truncar o arquivo para remover o conteúdo antigo além dos novos dados
+        ftruncate(fileno(file), posicaoInicial);
+
+        // Gravar os novos dados no arquivo
+        for (int i = 0; i < *contador; i++)
+        {
+            if (pecas[i].id != 0)
+            {
+                fprintf(file, "%d %s %s %s %d\n", pecas[i].id, pecas[i].nome, pecas[i].marca, pecas[i].montadora, pecas[i].quantidade);
+            }
         }
 
         fclose(file);
@@ -266,7 +281,6 @@ void atualizarQuantidadePecas(struct Peca *pecas, int contador, int id, int quan
         {
             encontrou = 1;
 
-            
             if (pecas[i].quantidade - quantidade < 0)
             {
                 printf("Quantidade invalida. Nao e possivel dar baixa.\n");
@@ -275,7 +289,6 @@ void atualizarQuantidadePecas(struct Peca *pecas, int contador, int id, int quan
 
             pecas[i].quantidade -= quantidade;
 
-
             FILE *file = fopen(PATH, "w");
             if (file == NULL)
             {
@@ -283,9 +296,12 @@ void atualizarQuantidadePecas(struct Peca *pecas, int contador, int id, int quan
                 return;
             }
 
-            for (i = 0; i < contador; i++)
+            for (int j = 0; j < contador; j++)
             {
-                fprintf(file, "%d %s %d\n", pecas[i].id, pecas[i].nome, pecas[i].quantidade);
+                if (pecas[j].id != 0)
+                {
+                    fprintf(file, "%d %s %s %s %d\n", pecas[j].id, pecas[j].nome, pecas[j].marca, pecas[j].montadora, pecas[j].quantidade);
+                }
             }
 
             fclose(file);

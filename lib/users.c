@@ -15,7 +15,7 @@
  * excluirUsuario(struct Usuario *usuarios, int *contador): Essa função permite excluir um usuário existente.
  * O usuário é identificado pelo ID. Ela solicita ao usuário que digite o ID do usuário a ser excluído.
  * O usuário correspondente é removido do array de usuários e também é atualizado o arquivo users.txt para refletir as alterações.
- * 
+ *
  * lerUsuarios(struct Usuario *usuarios, int *contador): Essa função é responsável por carregar todos os dados do arquivo users.txt
  */
 
@@ -53,7 +53,6 @@ void lerUsuarios(struct Usuario *usuarios, int *contador)
 
     fclose(file);
 }
-
 
 void exibirUsuarios()
 {
@@ -163,7 +162,7 @@ void atualizarUsuario(struct Usuario *usuarios, int contador)
             scanf("%s", usuarios[i].nome);
 
             printf("Digite a nova senha do usuario: ");
-            getchar();
+            fflush(stdin);
             scanf("%s", usuarios[i].senha);
 
             printf("Digite o novo cargo do usuario (0 - Normal, 1 - Administrador): ");
@@ -187,7 +186,10 @@ void atualizarUsuario(struct Usuario *usuarios, int contador)
         fflush(stdin);
         for (int i = 0; i < contador; i++)
         {
-            fprintf(file, "%d %s %s %d\n", usuarios[i].id, usuarios[i].nome, usuarios[i].senha, usuarios[i].cargo);
+            if (usuarios[i].id != 0)
+            {
+                fprintf(file, "%d %s %s %d\n", usuarios[i].id, usuarios[i].nome, usuarios[i].senha, usuarios[i].cargo);
+            }
         }
 
         fclose(file);
@@ -240,7 +242,10 @@ void excluirUsuario(struct Usuario *usuarios, int *contador)
         fflush(stdin);
         for (int i = 0; i < *contador; i++)
         {
-            fprintf(file, "%d %s %s %d\n", usuarios[i].id, usuarios[i].nome, usuarios[i].senha, usuarios[i].cargo);
+            if (usuarios[i].id != 0)
+            {
+                fprintf(file, "%d %s %s %d\n", usuarios[i].id, usuarios[i].nome, usuarios[i].senha, usuarios[i].cargo);
+            }
         }
 
         fclose(file);
@@ -278,4 +283,3 @@ void menuUsers(int opcao, struct Usuario usuarios[], int *contador)
         break;
     }
 }
-

@@ -11,6 +11,7 @@ void alterarConfig()
     logo();
     int novoEstoqueMinimo;
 
+    printf("----- CONFIGURACAO DE ESTOQUE -----\n\n");
     printf("Digite o novo estoque minimo do sistema: ");
     scanf("%d", &novoEstoqueMinimo);
 
