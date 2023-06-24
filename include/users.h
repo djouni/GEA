@@ -10,12 +10,10 @@ struct Usuario
 };
 
 
-
 void exibirUsuarios();
 void criarUsuario(struct Usuario *usuarios, int *contador);
 void atualizarUsuario(struct Usuario *usuarios, int contador);
 void excluirUsuario(struct Usuario *usuarios, int *contador);
-void menuUsersOptions();
 void menuUsers(int opcao, struct Usuario usuarios[], int *contador);
 void lerUsuarios(struct Usuario *usuarios, int *contador);
 

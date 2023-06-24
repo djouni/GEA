@@ -15,7 +15,7 @@
  * excluirUsuario(struct Usuario *usuarios, int *contador): Essa função permite excluir um usuário existente.
  * O usuário é identificado pelo ID. Ela solicita ao usuário que digite o ID do usuário a ser excluído.
  * O usuário correspondente é removido do array de usuários e também é atualizado o arquivo users.txt para refletir as alterações.
- * 
+ *
  * lerUsuarios(struct Usuario *usuarios, int *contador): Essa função é responsável por carregar todos os dados do arquivo users.txt
  */
 
@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "../include/users.h"
+#include "../include/client.h"
 #define PATH "C:/GEA/data/users.txt"
 
 void lerUsuarios(struct Usuario *usuarios, int *contador)
@@ -53,9 +54,11 @@ void lerUsuarios(struct Usuario *usuarios, int *contador)
     fclose(file);
 }
 
-
 void exibirUsuarios()
 {
+    clear();
+    logo();
+    printf("\t\t----- USUARIOS ATIVOS ----\n\n");
     FILE *file;
     file = fopen(PATH, "r");
     if (file == NULL)
@@ -84,10 +87,14 @@ void exibirUsuarios()
     {
         printf("Nenhum usuario cadastrado.\n");
     }
+    wait_action();
 }
 
 void criarUsuario(struct Usuario *usuarios, int *contador)
 {
+    clear();
+    logo();
+    printf("\t\t----- CRIAR NOVO USUARIOS  ----\n\n");
     if (*contador >= 100)
     {
         printf("Nao e possivel adicionar mais usuarios.\n");
@@ -137,6 +144,9 @@ void criarUsuario(struct Usuario *usuarios, int *contador)
 
 void atualizarUsuario(struct Usuario *usuarios, int contador)
 {
+    clear();
+    logo();
+    printf("\t\t----- ATUALIZAR DADOS DO USUARIOS  ----\n\n");
     int id;
 
     printf("Digite o ID do usuario a ser atualizado: ");
@@ -152,7 +162,7 @@ void atualizarUsuario(struct Usuario *usuarios, int contador)
             scanf("%s", usuarios[i].nome);
 
             printf("Digite a nova senha do usuario: ");
-            getchar();
+            fflush(stdin);
             scanf("%s", usuarios[i].senha);
 
             printf("Digite o novo cargo do usuario (0 - Normal, 1 - Administrador): ");
@@ -173,10 +183,13 @@ void atualizarUsuario(struct Usuario *usuarios, int contador)
             printf("Erro ao abrir o arquivo.\n");
             return;
         }
-
+        fflush(stdin);
         for (int i = 0; i < contador; i++)
         {
-            fprintf(file, "%d %s %s %d\n", usuarios[i].id, usuarios[i].nome, usuarios[i].senha, usuarios[i].cargo);
+            if (usuarios[i].id != 0)
+            {
+                fprintf(file, "%d %s %s %d\n", usuarios[i].id, usuarios[i].nome, usuarios[i].senha, usuarios[i].cargo);
+            }
         }
 
         fclose(file);
@@ -191,6 +204,10 @@ void atualizarUsuario(struct Usuario *usuarios, int contador)
 
 void excluirUsuario(struct Usuario *usuarios, int *contador)
 {
+    clear();
+    logo();
+    printf("\t\t----- EXCLUIR USUARIO  ----\n\n");
+
     int id;
 
     printf("Digite o ID do usuario a ser excluido: ");
@@ -222,10 +239,13 @@ void excluirUsuario(struct Usuario *usuarios, int *contador)
             printf("Erro ao abrir o arquivo.\n");
             return;
         }
-
+        fflush(stdin);
         for (int i = 0; i < *contador; i++)
         {
-            fprintf(file, "%d %s %s %d\n", usuarios[i].id, usuarios[i].nome, usuarios[i].senha, usuarios[i].cargo);
+            if (usuarios[i].id != 0)
+            {
+                fprintf(file, "%d %s %s %d\n", usuarios[i].id, usuarios[i].nome, usuarios[i].senha, usuarios[i].cargo);
+            }
         }
 
         fclose(file);
@@ -238,15 +258,6 @@ void excluirUsuario(struct Usuario *usuarios, int *contador)
     }
 }
 
-void menuUsersOptions()
-{
-    printf("Selecione uma opcao:\n");
-    printf("[1] Exibir usuarios\n");
-    printf("[2] Criar usuarios\n");
-    printf("[3] Atualizar usuarios\n");
-    printf("[4] Excluir usuarios\n");
-    printf("[0] Sair\n");
-}
 void menuUsers(int opcao, struct Usuario usuarios[], int *contador)
 {
     switch (opcao)
@@ -268,7 +279,7 @@ void menuUsers(int opcao, struct Usuario usuarios[], int *contador)
         break;
     default:
         printf("Opcao invalida. Por favor, escolha uma opcao valida.\n");
+        wait_action();
         break;
     }
 }
-
