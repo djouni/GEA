@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "../include/users.h"
+#include "../include/client.h"
 #define PATH "C:/GEA/data/users.txt"
 
 void lerUsuarios(struct Usuario *usuarios, int *contador)
@@ -56,6 +57,9 @@ void lerUsuarios(struct Usuario *usuarios, int *contador)
 
 void exibirUsuarios()
 {
+    clear();
+    logo();
+    printf("\t\t----- USUARIOS ATIVOS ----\n\n");
     FILE *file;
     file = fopen(PATH, "r");
     if (file == NULL)
@@ -84,10 +88,14 @@ void exibirUsuarios()
     {
         printf("Nenhum usuario cadastrado.\n");
     }
+    wait_action();
 }
 
 void criarUsuario(struct Usuario *usuarios, int *contador)
 {
+    clear();
+    logo();
+    printf("\t\t----- CRIAR NOVO USUARIOS  ----\n\n");
     if (*contador >= 100)
     {
         printf("Nao e possivel adicionar mais usuarios.\n");
@@ -137,6 +145,9 @@ void criarUsuario(struct Usuario *usuarios, int *contador)
 
 void atualizarUsuario(struct Usuario *usuarios, int contador)
 {
+    clear();
+    logo();
+    printf("\t\t----- ATUALIZAR DADOS DO USUARIOS  ----\n\n");
     int id;
 
     printf("Digite o ID do usuario a ser atualizado: ");
@@ -191,6 +202,10 @@ void atualizarUsuario(struct Usuario *usuarios, int contador)
 
 void excluirUsuario(struct Usuario *usuarios, int *contador)
 {
+    clear();
+    logo();
+    printf("\t\t----- EXCLUIR USUARIO  ----\n\n");
+
     int id;
 
     printf("Digite o ID do usuario a ser excluido: ");
@@ -238,15 +253,6 @@ void excluirUsuario(struct Usuario *usuarios, int *contador)
     }
 }
 
-void menuUsersOptions()
-{
-    printf("Selecione uma opcao:\n");
-    printf("[1] Exibir usuarios\n");
-    printf("[2] Criar usuarios\n");
-    printf("[3] Atualizar usuarios\n");
-    printf("[4] Excluir usuarios\n");
-    printf("[0] Sair\n");
-}
 void menuUsers(int opcao, struct Usuario usuarios[], int *contador)
 {
     switch (opcao)

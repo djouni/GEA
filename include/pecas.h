@@ -16,7 +16,5 @@ void atualizarPeca(struct Peca *pecas, int contador);
 void excluirPeca(struct Peca *pecas, int *contador);
 void atualizarQuantidadePecas(struct Peca *pecas, int contador, int id, int quantidade);
 void menuPecas(int opcao, struct Peca pecas[], int *contador);
-
-
-
+void exibirPecasAbaixoEstoqueMinimo(struct Peca *pecas, int contador);
 #endif

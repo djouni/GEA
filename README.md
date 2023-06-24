@@ -109,14 +109,14 @@ A utilização do código será divida em seis passos, ficando da seguinte forma
    - Execute o comando de compilação para gerar o executável do programa. Por exemplo:
 
      ```
-     gcc -o gea main.c
+     gcc -Wall -Wextra -g3 main.c ../lib/users.c ../lib/client.c ../lib/pecas.c -o main.exe
      ```
 
 2. **Execução:**
    - No terminal ou prompt de comando, execute o programa compilado. Por exemplo:
 
      ```
-     ./gea
+     ./main.exe
      ```
 
 3. **Opções do Menu:**

@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../include/pecas.h"
+#include "../include/config.h"
+#include "../include/client.h"
 #define PATH "C:/GEA/data/pecas.txt"
-
 
 void lerPecas(struct Peca *pecas, int *contador)
 {
@@ -34,9 +35,10 @@ void lerPecas(struct Peca *pecas, int *contador)
     fclose(file);
 }
 
-
 void exibirPecas()
 {
+    clear();
+    printf("\t\tPECAS EM ESTOQUE\n\n");
     FILE *file;
     file = fopen(PATH, "r");
     if (file == NULL)
@@ -45,7 +47,6 @@ void exibirPecas()
         return;
     }
 
-    printf("Lista de Pecas:\n");
     int id, quantidade;
     char nome[50], marca[50], montadora[50];
     int pecasEncontradas = 0;
@@ -67,11 +68,14 @@ void exibirPecas()
     {
         printf("Nenhuma peca cadastrada.\n");
     }
-}
 
+    wait_action();
+}
 
 void criarPeca(struct Peca *pecas, int *contador)
 {
+    clear();
+    printf("\t\tCADASTRAR NOVA PECA\n\n");
     if (*contador >= 100)
     {
         printf("Nao e possivel adicionar mais pecas.\n");
@@ -97,15 +101,16 @@ void criarPeca(struct Peca *pecas, int *contador)
     struct Peca novaPeca;
 
     printf("Digite o nome da peca: ");
-    scanf("%s", novaPeca.nome);
+    fgets(novaPeca.nome, sizeof(novaPeca.nome), stdin);
+    novaPeca.nome[strcspn(novaPeca.nome, "\n")] = '\0';
 
     printf("Digite a marca da peca: ");
-    getchar();
-    scanf("%s", novaPeca.marca);
+    fgets(novaPeca.marca, sizeof(novaPeca.marca), stdin);
+    novaPeca.marca[strcspn(novaPeca.marca, "\n")] = '\0';
 
     printf("Digite a montadora da peca: ");
-    getchar();
-    scanf("%s", novaPeca.montadora);
+    fgets(novaPeca.montadora, sizeof(novaPeca.montadora), stdin);
+    novaPeca.montadora[strcspn(novaPeca.montadora, "\n")] = '\0';
 
     printf("Digite a quantidade da peca: ");
     scanf("%d", &novaPeca.quantidade);
@@ -124,6 +129,8 @@ void criarPeca(struct Peca *pecas, int *contador)
 
 void atualizarPeca(struct Peca *pecas, int contador)
 {
+    clear();
+    printf("\t\tATUALIZAR CADASTRO DE PECAS\n\n");
     int id;
 
     printf("Digite o ID da peca a ser atualizada: ");
@@ -136,15 +143,17 @@ void atualizarPeca(struct Peca *pecas, int contador)
         if (pecas[i].id == id)
         {
             printf("Digite o novo nome da peca: ");
-            scanf("%s", pecas[i].nome);
+            getchar();
+            fgets(pecas[i].nome, sizeof(pecas[i].nome), stdin);
+            pecas[i].nome[strcspn(pecas[i].nome, "\n")] = '\0';
 
             printf("Digite a nova marca da peca: ");
-            getchar();
-            scanf("%s", pecas[i].marca);
+            fgets(pecas[i].marca, sizeof(pecas[i].marca), stdin);
+            pecas[i].marca[strcspn(pecas[i].marca, "\n")] = '\0';
 
             printf("Digite a nova montadora da peca: ");
-            getchar();
-            scanf("%s", pecas[i].montadora);
+            fgets(pecas[i].montadora, sizeof(pecas[i].montadora), stdin);
+            pecas[i].montadora[strcspn(pecas[i].montadora, "\n")] = '\0';
 
             printf("Digite a nova quantidade da peca: ");
             scanf("%d", &pecas[i].quantidade);
@@ -179,8 +188,11 @@ void atualizarPeca(struct Peca *pecas, int contador)
     }
 }
 
+
 void excluirPeca(struct Peca *pecas, int *contador)
 {
+    clear();
+    printf("\t\tEXCLUIR PECAS\n\n");
     int id;
 
     printf("Digite o ID da peca a ser excluida: ");
@@ -227,16 +239,23 @@ void excluirPeca(struct Peca *pecas, int *contador)
     }
 }
 
-void atualizarQuantidadePecas(struct Peca *pecas, int contador, int id, int quantidade) {
+void atualizarQuantidadePecas(struct Peca *pecas, int contador, int id, int quantidade)
+{
+    clear();
+    printf("\t\tDAR BAIXA\n\n");
+
     int i;
     int encontrou = 0;
 
-    for (i = 0; i < contador; i++) {
-        if (pecas[i].id == id) {
+    for (i = 0; i < contador; i++)
+    {
+        if (pecas[i].id == id)
+        {
             encontrou = 1;
 
             // Verifica se a quantidade de baixa é válida
-            if (pecas[i].quantidade - quantidade < 0) {
+            if (pecas[i].quantidade - quantidade < 0)
+            {
                 printf("Quantidade invalida. Nao e possivel dar baixa.\n");
                 return;
             }
@@ -245,12 +264,14 @@ void atualizarQuantidadePecas(struct Peca *pecas, int contador, int id, int quan
 
             // Atualiza o arquivo com as novas quantidades
             FILE *file = fopen(PATH, "w");
-            if (file == NULL) {
+            if (file == NULL)
+            {
                 printf("Erro ao abrir o arquivo.\n");
                 return;
             }
 
-            for (i = 0; i < contador; i++) {
+            for (i = 0; i < contador; i++)
+            {
                 fprintf(file, "%d %s %d\n", pecas[i].id, pecas[i].nome, pecas[i].quantidade);
             }
 
@@ -261,8 +282,32 @@ void atualizarQuantidadePecas(struct Peca *pecas, int contador, int id, int quan
         }
     }
 
-    if (!encontrou) {
+    if (!encontrou)
+    {
         printf("Peca com ID %d nao encontrada.\n", id);
+    }
+}
+
+void exibirPecasAbaixoEstoqueMinimo(struct Peca *pecas, int contador)
+{
+    clear();
+    printf("\t\tPECAS EM FALTA\n\n");
+    int estoqueMinimo = obterEstoqueMinimo();
+
+    printf("Quantidade minima: %d\n", estoqueMinimo);
+    printf("Pecas abaixo do estoque minimo:\n");
+
+    for (int i = 0; i < contador; i++)
+    {
+        if (pecas[i].quantidade < estoqueMinimo)
+        {
+            printf("ID: %d\n", pecas[i].id);
+            printf("Nome: %s\n", pecas[i].nome);
+            printf("Marca: %s\n", pecas[i].marca);
+            printf("Montadora: %s\n", pecas[i].montadora);
+            printf("Quantidade: %d\n", pecas[i].quantidade);
+            printf("---------------------\n");
+        }
     }
 }
 
@@ -274,7 +319,7 @@ void menuPecas(int opcao, struct Peca pecas[], int *contador)
         criarPeca(pecas, contador);
         break;
     case 2:
-        exibirPecas(pecas, *contador);
+        exibirPecas();
         break;
     case 3:
         atualizarPeca(pecas, *contador);
@@ -283,18 +328,22 @@ void menuPecas(int opcao, struct Peca pecas[], int *contador)
         excluirPeca(pecas, contador);
         break;
     case 5:
-        {
-            int id, quantidade;
+    {
+        int id, quantidade;
 
-            printf("Digite o ID da peca: ");
-            scanf("%d", &id);
+        printf("Digite o ID da peca: ");
+        scanf("%d", &id);
 
-            printf("Digite a quantidade de baixa: ");
-            scanf("%d", &quantidade);
+        printf("Digite a quantidade de baixa: ");
+        scanf("%d", &quantidade);
 
-            atualizarQuantidadePecas(pecas, *contador, id, quantidade);
-        }
+        atualizarQuantidadePecas(pecas, *contador, id, quantidade);
         break;
+    }
+    case 6:
+        exibirPecasAbaixoEstoqueMinimo(pecas, *contador);
+        break;
+
     case 0:
         printf("Saindo do menu de pecas...\n");
         break;
@@ -303,5 +352,3 @@ void menuPecas(int opcao, struct Peca pecas[], int *contador)
         break;
     }
 }
-
-
