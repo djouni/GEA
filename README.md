@@ -109,7 +109,7 @@ A utilização do código será divida em seis passos, ficando da seguinte forma
    - Execute o comando de compilação para gerar o executável do programa. Por exemplo:
 
      ```
-     gcc -Wall -Wextra -g3 main.c ../lib/users.c ../lib/client.c ../lib/pecas.c -o main.exe
+     gcc -Wall -Wextra -g3 main.c ../lib/users.c ../lib/client.c ../lib/pecas.c ../lib/config.c -o main.exe
      ```
 
 2. **Execução:**
