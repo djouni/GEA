@@ -324,26 +324,33 @@ void exibirPecasAbaixoEstoqueMinimo(struct Peca *pecas, int contador)
     int estoqueMinimo = obterEstoqueMinimo();
 
     printf("Quantidade minima: %d\n", estoqueMinimo);
-    printf("Pecas abaixo do estoque minimo:\n");
+    printf("Pecas abaixo do estoque minimo:\n\n");
+
+    int encontrouPecas = 0;
 
     for (int i = 0; i < contador; i++)
     {
-        if (pecas[i].quantidade < estoqueMinimo)
+        if (pecas[i].quantidade < estoqueMinimo && pecas[i].id != 0)
         {
-            if (pecas[i].id != 0 && strcmp(pecas[i].nome, "") != 0 && strcmp(pecas[i].marca, "") != 0 && strcmp(pecas[i].montadora, "") != 0)
-            {
-                printf("ID: %d\n", pecas[i].id);
-                printf("Nome: %s\n", pecas[i].nome);
-                printf("Marca: %s\n", pecas[i].marca);
-                printf("Montadora: %s\n", pecas[i].montadora);
-                printf("Quantidade: %d\n", pecas[i].quantidade);
-                printf("---------------------\n");
-            }
+            printf("ID: %d\n", pecas[i].id);
+            printf("Nome: %s\n", pecas[i].nome);
+            printf("Marca: %s\n", pecas[i].marca);
+            printf("Montadora: %s\n", pecas[i].montadora);
+            printf("Quantidade: %d\n", pecas[i].quantidade);
+            printf("---------------------\n");
+            encontrouPecas = 1;
         }
+    }
+
+    if (!encontrouPecas)
+    {
+        printf("Nao ha pecas abaixo do estoque minimo.\n");
     }
 
     wait_action();
 }
+
+
 
 void menuPecas(int opcao, struct Peca pecas[], int *contador)
 {

@@ -29,6 +29,7 @@ void logo()
 int login(struct Usuario *usuarios, int contador)
 {
     char usuario[50], senha[10];
+    logo();
     printf("\t\tBem-vindo ao GEA\n\n");
 
     int loginValido = 0;
@@ -54,7 +55,7 @@ int login(struct Usuario *usuarios, int contador)
 
         if (!loginValido)
         {
-            printf("Usuário ou senha inválidos. Tente novamente!\n");
+            printf("Usuario ou senha invalidos. Tente novamente!\n");
         }
     }
 
