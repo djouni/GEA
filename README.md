@@ -2,8 +2,9 @@
 
 - João Eduardo Quinteiro
 - João Pedro Barbosa
-- Nicolas
-- Lerry
+- Nicolas Martins
+- Lerry Pereira
+- Lucas Florentino
 
 # Titulo do Projeto
 
