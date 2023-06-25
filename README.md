@@ -171,7 +171,7 @@ Essa é apenas uma instrução básica de uso levando em conta as funções prim
 
 ### Bugs Encontrados
 
-- N/A
+- Bugs resolvidos ao longo do projeto.
 
 ### Novas funcionalidades
 
