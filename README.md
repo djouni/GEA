@@ -4,6 +4,7 @@
 - João Pedro Barbosa
 - Nicolas
 - Lerry
+- Lucas 
 
 # Titulo do Projeto
 
