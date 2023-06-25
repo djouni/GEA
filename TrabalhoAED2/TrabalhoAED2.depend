@@ -1,0 +1,48 @@
+# depslib dependency file v1.0
+1687656927 source:c:\users\nicol\desktop\gea\lib\client.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"../include/client.h"
+	"../include/users.h"
+
+1687654810 c:\users\nicol\desktop\gea\include\client.h
+	"users.h"
+
+1687654802 c:\users\nicol\desktop\gea\include\users.h
+
+1687655896 source:c:\users\nicol\desktop\gea\lib\config.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"../include/config.h"
+	"../include/client.h"
+
+1687654813 c:\users\nicol\desktop\gea\include\config.h
+
+1687655401 source:c:\users\nicol\desktop\gea\lib\pecas.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<unistd.h>
+	"../include/pecas.h"
+	"../include/config.h"
+	"../include/client.h"
+
+1687654806 c:\users\nicol\desktop\gea\include\pecas.h
+
+1687652998 source:c:\users\nicol\desktop\gea\lib\users.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"../include/users.h"
+	"../include/client.h"
+
+1687656921 source:c:\users\nicol\desktop\gea\src\main.c
+	<stdio.h>
+	<stdlib.h>
+	"../include/users.h"
+	"../include/client.h"
+	"../include/pecas.h"
+	"../include/config.h"
+
