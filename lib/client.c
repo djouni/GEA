@@ -13,7 +13,7 @@ void clear()
 void wait_action()
 {
     printf("Pressione Enter para voltar ao menu...");
-    getchar(); 
+    getchar();
     getchar();
 }
 
